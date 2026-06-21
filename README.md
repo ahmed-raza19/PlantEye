@@ -1,6 +1,7 @@
 <div align="center">
 
 # 🌱 PlantEye
+
 ### Vision-Based Autonomous Plant Disease Detector
 
 *An autonomous rover that hunts down plants in a garden, photographs their leaves, and diagnoses crop diseases with AI — in real time.*
@@ -41,7 +42,7 @@
   - [2. Set Up the AI Engine](#2-set-up-the-ai-engine)
   - [3. Run the System](#3-run-the-system)
 - [MQTT Topic Reference](#-mqtt-topic-reference)
-- [Challenges & Solutions](#-challenges--solutions)
+- [Challenges &amp; Solutions](#-challenges--solutions)
 - [Future Improvements](#-future-improvements)
 - [The Team](#-the-team)
 - [License](#-license)
@@ -62,16 +63,16 @@ This was built as a semester project for **Programming for Artificial Intelligen
 
 ## ✨ Key Features
 
-| | Feature | Description |
-|---|---|---|
-| 🧭 | **Autonomous + Manual Navigation** | Drives itself using an obstacle-aware control loop, or can be remote-controlled over HTTP |
-| 🔍 | **Real-Time Plant Detection** | YOLOv8n locates potted plants in the live video feed and tracks the largest one as a target |
-| 📡 | **Wireless Image Streaming** | The ESP32-CAM streams JPEG frames to the base station over WiFi — no cables, no SD cards |
-| 🧠 | **AI-Powered Disease Diagnosis** | A MobileNetV2-based TensorFlow Lite model classifies leaf images across **38 disease/health classes** |
-| 💊 | **Instant Treatment Advice** | A built-in knowledge base maps every diagnosis to a practical, actionable treatment |
-| 📊 | **Live Diagnostic Dashboard** | A "mission control" style OpenCV UI shows the camera feed, confidence bars, and recommended action |
-| 🔁 | **Continuous Scanning** | Once one plant is diagnosed, the rover automatically resumes searching for the next |
-| 🛡️ | **Obstacle Avoidance** | An ultrasonic sensor halts the rover before it collides with anything in its path |
+|      | Feature                                  | Description                                                                                                |
+| ---- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| 🧭   | **Autonomous + Manual Navigation** | Drives itself using an obstacle-aware control loop, or can be remote-controlled over HTTP                  |
+| 🔍   | **Real-Time Plant Detection**      | YOLOv8n locates potted plants in the live video feed and tracks the largest one as a target                |
+| 📡   | **Wireless Image Streaming**       | The ESP32-CAM streams JPEG frames to the base station over WiFi — no cables, no SD cards                  |
+| 🧠   | **AI-Powered Disease Diagnosis**   | A MobileNetV2-based TensorFlow Lite model classifies leaf images across**38 disease/health classes** |
+| 💊   | **Instant Treatment Advice**       | A built-in knowledge base maps every diagnosis to a practical, actionable treatment                        |
+| 📊   | **Live Diagnostic Dashboard**      | A "mission control" style OpenCV UI shows the camera feed, confidence bars, and recommended action         |
+| 🔁   | **Continuous Scanning**            | Once one plant is diagnosed, the rover automatically resumes searching for the next                        |
+| 🛡️ | **Obstacle Avoidance**             | An ultrasonic sensor halts the rover before it collides with anything in its path                          |
 
 ---
 
@@ -83,11 +84,11 @@ The system is split into **two independent ESP32 modules** and a **laptop "brain
   <img src="docs/images/system-architecture.png" width="70%" alt="PlantEye system architecture diagram" />
 </div>
 
-| Module | Responsibility | Hardware |
-|---|---|---|
-| **Navigation Unit** | Drives the motors, avoids obstacles, executes HTTP movement commands | ESP32 Dev Module, L298N driver, HC-SR04 |
-| **Vision Unit** | Captures JPEG frames and streams them over MQTT in chunks | ESP32-CAM (AI-Thinker) |
-| **AI Base Station** | Runs YOLOv8n for plant detection + steering, then MobileNetV2 (TFLite) for disease classification | Laptop |
+| Module                    | Responsibility                                                                                    | Hardware                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| **Navigation Unit** | Drives the motors, avoids obstacles, executes HTTP movement commands                              | ESP32 Dev Module, L298N driver, HC-SR04 |
+| **Vision Unit**     | Captures JPEG frames and streams them over MQTT in chunks                                         | ESP32-CAM (AI-Thinker)                  |
+| **AI Base Station** | Runs YOLOv8n for plant detection + steering, then MobileNetV2 (TFLite) for disease classification | Laptop                                  |
 
 All wireless transport runs over **MQTT**, chosen specifically for its lightweight footprint and **Quality of Service (QoS) guarantees** — ensuring image chunks arrive complete and in order even over a flaky WiFi link.
 
@@ -191,10 +192,11 @@ PlantEye/
 You'll need the **Arduino IDE** with the ESP32 board package installed.
 
 **Libraries required:**
-| Sketch | Libraries |
-|---|---|
+
+| Sketch                     | Libraries                                                                                  |
+| -------------------------- | ------------------------------------------------------------------------------------------ |
 | `esp32_cam_streamer.ino` | `WiFi.h`, `PubSubClient`, `esp_camera.h` (bundled with ESP32 core, AI-Thinker board) |
-| `motor_controller.ino` | `WiFi.h`, `WebServer.h` |
+| `motor_controller.ino`   | `WiFi.h`, `WebServer.h`                                                                |
 
 **Before uploading**, open each `.ino` file and replace the placeholders:
 
@@ -234,11 +236,11 @@ python plant_doctor.py
 
 **Controls inside `mqtt_receiver.py`:**
 
-| Key | Action |
-|---|---|
+| Key   | Action                                                                |
+| ----- | --------------------------------------------------------------------- |
 | `A` | Toggle autopilot (rover auto-tracks and approaches the nearest plant) |
-| `C` | Capture the current frame for diagnosis |
-| `Q` | Quit and stop the stream |
+| `C` | Capture the current frame for diagnosis                               |
+| `Q` | Quit and stop the stream                                              |
 
 Captured frames automatically drop into `ai-engine/captured_images/`, which `plant_doctor.py` watches and diagnoses in real time.
 
@@ -246,23 +248,23 @@ Captured frames automatically drop into `ai-engine/captured_images/`, which `pla
 
 ## 📡 MQTT Topic Reference
 
-| Topic | Direction | Purpose |
-|---|---|---|
-| `planteye/camera/stream` | ESP32-CAM → Base | Live JPEG frame chunks (`FRAME:size:chunks` → chunks → `FRAME_END`) |
-| `planteye/camera/image` | ESP32-CAM → Base | High-res still capture chunks (`START:size:chunks` → chunks → `END`) |
+| Topic                       | Direction         | Purpose                                                                     |
+| --------------------------- | ----------------- | --------------------------------------------------------------------------- |
+| `planteye/camera/stream`  | ESP32-CAM → Base | Live JPEG frame chunks (`FRAME:size:chunks` → chunks → `FRAME_END`)   |
+| `planteye/camera/image`   | ESP32-CAM → Base | High-res still capture chunks (`START:size:chunks` → chunks → `END`)  |
 | `planteye/camera/command` | Base → ESP32-CAM | `CAPTURE`, `START_STREAM`, `STOP_STREAM`, `FLASH_ON`, `FLASH_OFF` |
-| `planteye/camera/status` | ESP32-CAM → Base | Online/offline status, retained Last-Will message |
+| `planteye/camera/status`  | ESP32-CAM → Base | Online/offline status, retained Last-Will message                           |
 
 ---
 
 ## 🛠 Challenges & Solutions
 
-| Challenge | Solution |
-|---|---|
-| **Hardware integration** — the camera and motors interfered with each other when sharing one controller | Split the system across **two independent ESP32 modules**, isolating imaging from motor control |
-| **Disease detection accuracy** — thousands of diseases look visually similar | Used **MobileNetV2**, pre-trained on a large plant-disease dataset, for a strong classification baseline |
-| **Limited onboard compute** — the ESP32 can't run deep learning models | Offloaded **all AI inference to the laptop**; the rover only captures and streams images |
-| **Battery holder burnout** — a holder overheated under combined motor + camera current draw | Replaced it with a higher-quality, better heat-dissipating holder and added a dedicated voltage regulator |
+| Challenge                                                                                                      | Solution                                                                                                      |
+| -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| **Hardware integration** — the camera and motors interfered with each other when sharing one controller | Split the system across**two independent ESP32 modules**, isolating imaging from motor control          |
+| **Disease detection accuracy** — thousands of diseases look visually similar                            | Used**MobileNetV2**, pre-trained on a large plant-disease dataset, for a strong classification baseline |
+| **Limited onboard compute** — the ESP32 can't run deep learning models                                  | Offloaded**all AI inference to the laptop**; the rover only captures and streams images                 |
+| **Battery holder burnout** — a holder overheated under combined motor + camera current draw             | Replaced it with a higher-quality, better heat-dissipating holder and added a dedicated voltage regulator     |
 
 ---
 
@@ -275,27 +277,9 @@ Captured frames automatically drop into `ai-engine/captured_images/`, which `pla
 
 ---
 
-## 👥 The Team
-
-Built by **Section AI-B**, FAST NUCES Islamabad, for *Programming for Artificial Intelligence* under **Ms. Mariam bint Imran**.
-
-| Member | Roll Number | Contribution |
-|---|---|---|
-| **Ahmed Raza** | 24i-0026 | Project proposal, AI/disease-detection model research, software development, hardware support |
-| **Usaid Raza** | 24i-0057 | Plant detection & disease classification model development |
-| **Faizan Ahmad** | 24i-0059 | Software–hardware integration (ESP32-CAM ↔ AI model), connectivity |
-| **Muhammad Shaheed Khan** | 24i-0037 | Chassis assembly, final ESP32 hardware integration |
-| **Ali Khan** | 24i-0069 | Project report, hardware assembly support |
-
-<div align="center">
-  <img src="docs/images/team-build-session.jpg" width="55%" alt="The PlantEye team during a build session" />
-</div>
-
----
-
 ## 📜 License
 
-Released under the [MIT License](LICENSE) — free to use, modify, and build on for educational or personal projects.
+Releasd under the [MIT License](LICENSE) — free to use, modify, and build on for educational or personal projects.
 
 <div align="center">
 
