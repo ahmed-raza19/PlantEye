@@ -1,0 +1,29 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+*.log
+
+# ===== OpenCV / Captured runtime data =====
+ai-engine/captured_images/
+*.avi
+*.mp4
+
+# ===== Jupyter =====
+.ipynb_checkpoints/
+
+# ===== Arduino / PlatformIO =====
+.pio/
+.vscode/
+*.hex
+
+# ===== OS junk =====
+.DS_Store
+Thumbs.db
+
+# ===== Editor =====
+.idea/
+*.swp
